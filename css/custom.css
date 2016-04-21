@@ -15,6 +15,10 @@ body {
     display: inline-block;
 }
 
+.form-control.select {
+    width: 120%;
+}
+
 @media(min-width:768px) {
     body {
         margin-top: 50px;
@@ -151,6 +155,11 @@ body {
     font-size: 40px;
 }
 
+.panel-body {
+    padding: 10px;
+    padding-left: 15px;
+}
+
 .panel-green {
     border-color: #5cb85c;
 }
@@ -238,10 +247,6 @@ body {
     margin-left: 5%;
 }
 
-#sort_option {
-    width: 80%;
-}
-
 
 /*item log css*/
 .inline.item_name, .inline.item_debt, .inline.item_credit {
@@ -268,11 +273,19 @@ body {
     font-size: 200%;
 }
 
-.inline.addExpense {
+.inline.modalcss {
     font-weight: bold;
     font-size: 120%;
     width: 20%;
     margin: 15px;
+}
+
+.inline.category {
+    font-weight: bold;
+    font-size: 120%;
+    margin: 15px;
+    margin-right: 6%;
+    display: inline;
 }
 
 

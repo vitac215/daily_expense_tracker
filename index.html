@@ -28,7 +28,6 @@
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js"></script>
 
-
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -86,6 +85,8 @@
             <!-- /.navbar-collapse -->
         </nav>
 
+
+
         <div id="page-wrapper">
 
             <div class="container-fluid">
@@ -110,7 +111,7 @@
 							</div>
 							Sort by: 
 							<div id="sort_btn" class="inline">
-								<select class="form-control" id="sort_option">
+								<select class="form-control select" id="sort_option">
 									<option value="Time">Time</option>
 									<option value="category">Categoty</option>
 									<option value="amt">Amount</option>
@@ -124,35 +125,59 @@
                 <div class="row">
                     <div class="col-lg-12 itemlog">     	
                     	<div class="list-group-item list-group-item-success">
-                    		<div class="inline item_name">Zootopia</div>
-                    		<div class="inline item_amt">$10</div>
-                    		<div class="inline item_category">Category: Movie</div>
-                    		<div class="inline item_note">Note: Pretty good movie</div>
+                    		<div class="inline item_name">Income</div>
+                    		<div class="inline item_amt">
+                    			<div class="inline currency">$</div>
+                    			100
+                    		</div>
+                    		<div class="inline item_category">Category: General</div>
+                    		<div class="inline item_note">Note: from Income.inc</div>
                     	</div>
                     	<div class="list-group-item list-group-item-warning">
-                    		<div class="inline item_name">Hello world</div>
-                    		<div class="inline item_amt">$50</div>
-                    		<div class="inline item_category">Category: Book</div>
-                    		<div class="inline item_note">Note: Plan to read in 10 days</div>
+                    		<div class="inline item_name">Zootopia</div>
+                    		<div class="inline item_amt">
+                    			<div class="inline currency">$</div>
+                    			50
+                    		</div>
+                    		<div class="inline item_category">Category: Entertain</div>
+                    		<div class="inline item_note">Note: Good movie</div>
                     	</div>
                     	<div class="list-group-item list-group-item-default">
                     		<div class="inline item_debt">Debt to: Peter</div>
-                    		<div class="inline item_amt">$30</div>
+                    		<div class="inline item_amt">
+								<div class="inline currency">$</div>
+								30
+                    		</div>
                     		<div class="inline item_category">Category: Debt</div>
                     		<div class="inline item_note">Note: Repay in 10 days</div>
                     	</div>
- 					</div>
+ 					</div> <!-- itemlog -->
+                </div> <!-- /.row -->
+
+                <div class="row">
+                	<div class="col-lg-12 summarylog">  
+                		<div class="panel panel-default"> 
+                			<div class="panel-heading">Total Expense: 
+                				<div id="totalexpense"></div>
+                			</div>
+                			<div class="panel-body">Total Income:
+                				<div id="totalincome"></div>
+                			</div>
+                			<div class="panel-heading">Net: 
+                				<div id="net"></div>
+                			</div>
+                		</div>
+                	</div>
                 </div>
-                <!-- /.row -->
-            </div>
-            <!-- /.container-fluid -->
-        </div>
-        <!-- /#page-wrapper -->
-    </div>
-    <!-- /#wrapper -->
+
+            </div> <!-- /.container-fluid -->
+        </div> <!-- /#page-wrapper -->
+    </div> <!-- /#wrapper -->
 
 
-    <!-- modal -->
+
+
+    <!-- 8 modal -->
 	<div class="modal fade" id="addExpenseModal">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -165,17 +190,34 @@
 				<div class="modal-body">
 					<form id="addExpenseForm">
 						<div class="expense_name">
-							<div class="inline addExpense">Item Name: </div>
+							<div class="inline modalcss">Item Name: </div>
 							<input type="text" class="form-control">
 						</div>
 						<div class="expense_amt">
-							<div class="inline addExpense">Amount: </div>
+							<div class="inline modalcss">Amount: </div>
 							<input type="number" step="any" class="form-control">
 						</div>
 						<div class="expense_category">
-							<div class="inline addExpense">Category: </div>
-							<input type="text" class="form-control">
-						</div>						
+							<div class="inline category">Category: </div>
+							<div class="inline modalcss">
+								<select class="form-control select" id="category_option">
+									<option value="general">General</option>
+									<option value="personal">Personal</option>
+									<option value="food">Food</option>
+									<option value="groceries">Groceries</option>
+									<option value="shopping">Shopping</option>
+									<option value="entertain">Entertain</option>
+									<option value="transport">Transport</option>
+									<option value="housing">Housing</option>
+									<option value="medical">Medical</option>
+									<option value="academic">Academic</option>
+								</select>
+							</div>
+						</div><!-- expense_category -->					
+						<div class="expense_note">
+							<div class="inline modalcss">Note: </div>
+							<input type="text" class="form-control">	
+						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
@@ -184,16 +226,310 @@
 				</div>
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
+	</div><!-- /.addExpenseModal -->
+
+	<div class="modal fade" id="editExpenseModal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">Edit Expense</h4>
+				</div>
+				<div class="modal-body">
+					<form id="editExpenseForm">
+						<div class="expense_name">
+							<div class="inline modalcss">Item Name: </div>
+							<input type="text" class="form-control" placeholder="Item Name">
+						</div>
+						<div class="expense_amt">
+							<div class="inline modalcss">Amount: </div>
+							<input type="number" step="any" class="form-control">
+						</div>
+						<div class="expense_category">
+							<div class="inline category">Category: </div>
+							<div class="inline modalcss">
+								<select class="form-control select" id="category_option">
+									<option value="general">General</option>
+									<option value="personal">Personal</option>
+									<option value="food">Food</option>
+									<option value="groceries">Groceries</option>
+									<option value="shopping">Shopping</option>
+									<option value="entertain">Entertain</option>
+									<option value="transport">Transport</option>
+									<option value="housing">Housing</option>
+									<option value="medical">Medical</option>
+									<option value="academic">Academic</option>
+								</select>
+							</div>
+						</div>	<!-- expense_category -->		
+						<div class="expense_note">
+							<div class="inline modalcss">Note: </div>
+							<input type="text" class="form-control" placeholder="Note">	
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Delete</button>
+					<button type="button" class="btn btn-primary">Edit</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.editExpenseModal -->
+
+
+	<div class="modal fade" id="addIncomeModal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">New Income</h4>
+				</div>
+				<div class="modal-body">
+					<form id="addIncomeForm">
+						<div class="income_name">
+							<div class="inline modalcss">Item Name: </div>
+							<input type="text" class="form-control">
+						</div>
+						<div class="income_amt">
+							<div class="inline modalcss">Amount: </div>
+							<input type="number" step="any" class="form-control">
+						</div>
+						<div class="income_category">
+							<div class="inline category">Category: </div>
+							<div class="inline modalcss">
+								<select class="form-control select" id="category_option">
+									<option value="general">General</option>
+									<option value="personal">Personal</option>
+									<option value="food">Food</option>
+									<option value="groceries">Groceries</option>
+									<option value="shopping">Shopping</option>
+									<option value="entertain">Entertain</option>
+									<option value="transport">Transport</option>
+									<option value="housing">Housing</option>
+									<option value="medical">Medical</option>
+									<option value="academic">Academic</option>
+								</select>
+							</div>
+						</div><!-- category -->					
+						<div class="income_note">
+							<div class="inline modalcss">Note: </div>
+							<input type="text" class="form-control">	
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Add</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.addIncomeModal -->
+
+
+	<div class="modal fade" id="editIncomeModal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">Edit Income</h4>
+				</div>
+				<div class="modal-body">
+					<form id="editIncomeForm">
+						<div class="income_name">
+							<div class="inline modalcss">Item Name: </div>
+							<input type="text" class="form-control" placeholder="Item Name">
+						</div>
+						<div class="income_amt">
+							<div class="inline modalcss">Amount: </div>
+							<input type="number" step="any" class="form-control">
+						</div>
+						<div class="income_category">
+							<div class="inline category">Category: </div>
+							<div class="inline modalcss">
+								<select class="form-control select" id="category_option">
+									<option value="general">General</option>
+									<option value="personal">Personal</option>
+									<option value="food">Food</option>
+									<option value="groceries">Groceries</option>
+									<option value="shopping">Shopping</option>
+									<option value="entertain">Entertain</option>
+									<option value="transport">Transport</option>
+									<option value="housing">Housing</option>
+									<option value="medical">Medical</option>
+									<option value="academic">Academic</option>
+								</select>
+							</div>
+						</div>	<!-- category -->		
+						<div class="income_note">
+							<div class="inline modalcss">Note: </div>
+							<input type="text" class="form-control" placeholder="Note">	
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Delete</button>
+					<button type="button" class="btn btn-primary">Edit</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.editIncomeModal -->
+
+
+	<div class="modal fade" id="addDebtModal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">New Debt</h4>
+				</div>
+				<div class="modal-body">
+					<form id="addDebtModalForm">
+						<div class="debt_From">
+							<div class="inline modalcss">To: </div>
+							<input type="text" class="form-control" placeholder="username">
+						</div>
+						<div class="debt_amt">
+							<div class="inline modalcss">Amount: </div>
+							<input type="number" step="any" class="form-control">
+						</div>
+						<!-- default category is: debt -->				
+						<div class="debt_note">
+							<div class="inline modalcss">Note: </div>
+							<input type="text" class="form-control">	
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Add</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.addDebtModal -->
+
+	<div class="modal fade" id="editDebtModal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">Edit Debt</h4>
+				</div>
+				<div class="modal-body">
+					<form id="editDebtModalForm">
+						<div class="debt_From">
+							<div class="inline modalcss">To Username</div>
+						</div>
+						<div class="debt_amt">
+							<div class="inline modalcss">Amount: </div>
+							<input type="number" step="any" class="form-control">
+						</div>
+						<!-- default category is: debt -->				
+						<div class="debt_note">
+							<div class="inline modalcss">Note: </div>
+							<input type="text" class="form-control">	
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Delete</button>
+					<button type="button" class="btn btn-primary">Edit</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.editDebtModal -->
+
+	<div class="modal fade" id="addCreditModal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">New Credit</h4>
+				</div>
+				<div class="modal-body">
+					<form id="addCreditModalForm">
+						<div class="credit_From">
+							<div class="inline modalcss">From: </div>
+							<input type="text" class="form-control" placeholder="username">
+						</div>
+						<div class="credit_amt">
+							<div class="inline modalcss">Amount: </div>
+							<input type="number" step="any" class="form-control">
+						</div>
+						<!-- default category is: credit -->		
+						<div class="credit_note">
+							<div class="inline modalcss">Note: </div>
+							<input type="text" class="form-control">	
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Add</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.addCreditModal -->
+
+	<div class="modal fade" id="editCreditModal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">Edit Credit</h4>
+				</div>
+				<div class="modal-body">
+					<form id="editCreditModalForm">
+						<div class="credit_From">
+							<div class="inline modalcss" style="display:inline;">From Username</div>
+						</div>
+						<div class="credit_amt">
+							<div class="inline modalcss">Amount: </div>
+							<input type="number" step="any" class="form-control">
+						</div>
+						<!-- default category is: credit -->			
+						<div class="credit_note">
+							<div class="inline modalcss">Note: </div>
+							<input type="text" class="form-control">	
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Delete</button>
+					<button type="button" class="btn btn-primary">Edit</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.editCreditModal -->
 
 
 	<!-- test -->
 	<script>
-		$(document).ready(function(){
-		    $("#expense_btn").click(function(){
-		        $("#addExpenseModal").modal();
-		    });
-		});
+		// $("#addExpenseModal").modal();
+		// $("#editExpenseModal").modal();
+		// $("#addIncomeModal").modal();
+		// $("#editIncomeModal").modal();
+		// $("#addDebtModal").modal();
+		// $("#editDebtModal").modal();
+		// $("#addCreditModal").modal();
+		// $("#editCreditModal").modal();
 	</script>
 
     <!-- additional jQuery -->
