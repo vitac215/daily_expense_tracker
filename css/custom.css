@@ -11,7 +11,7 @@ body {
     background-color: #fff;
 }
 
-div .inline {
+.inline {
     display: inline-block;
 }
 
@@ -238,10 +238,15 @@ div .inline {
     margin-left: 5%;
 }
 
+#sort_option {
+    width: 80%;
+}
+
 
 /*item log css*/
 .inline.item_name, .inline.item_debt, .inline.item_credit {
     width: 25%;
+    font-weight: bold;
 }
 
 .inline.item_amt {
@@ -250,6 +255,24 @@ div .inline {
 
 .inline.item_category {
     width: 20%;
+}
+
+/* modal css */
+.modal-header, .modal-footer {
+    background-color: #ffffe6;
+}
+
+.modal-title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 200%;
+}
+
+.inline.addExpense {
+    font-weight: bold;
+    font-size: 120%;
+    width: 20%;
+    margin: 15px;
 }
 
 
