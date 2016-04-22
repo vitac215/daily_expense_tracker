@@ -239,11 +239,11 @@ body {
     margin-bottom: 20px;
 }
 
-#date_previous {
+#btn_date_previous {
     margin-right: 6%;
 }
 
-#date_next {
+#btn_date_next {
     margin-left: 5%;
 }
 
