@@ -174,12 +174,18 @@ $(function(){
 	}
 
 
-
 	// Update the date
 	function updateDate() {
 		// Display the current month and year
 		$("#current_date").html(todayMonth + "/" + todayDay + "/" + todayYear);
 	} // End of updateDate function
+
+
+
+	// Register
+	
+
+
 
 
 }); // End of JQuey
