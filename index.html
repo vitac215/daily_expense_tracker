@@ -177,7 +177,68 @@
 
 
 
-    <!-- 8 modal -->
+    <!-- modal -->
+    <!-- register -->
+	<div class="modal fade" id="registerModal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">Register</h4>
+				</div>
+				<div class="modal-body">
+					<form id="registerForm">
+						<div class="register_username">
+							<div class="inline modalcss">Username: </div>
+							<input type="text" class="form-control">
+						</div>
+						<div class="register_pwd">
+							<div class="inline modalcss">Password: </div>
+							<input type="password" class="form-control">
+						</div>				
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Register</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.registerModal -->
+
+    <!-- register -->
+	<div class="modal fade" id="loginModal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">Log In</h4>
+				</div>
+				<div class="modal-body">
+					<form id="loginForm">
+						<div class="login_username">
+							<div class="inline modalcss">Username: </div>
+							<input type="text" class="form-control">
+						</div>
+						<div class="login_pwd">
+							<div class="inline modalcss">Password: </div>
+							<input type="password" class="form-control">
+						</div>				
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Log In</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.loginModal -->
+
+
 	<div class="modal fade" id="addExpenseModal">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -530,6 +591,8 @@
 		// $("#editDebtModal").modal();
 		// $("#addCreditModal").modal();
 		// $("#editCreditModal").modal();
+		// $("#registerModal").modal();
+		// $("#loginModal").modal();
 	</script>
 
     <!-- additional jQuery -->
