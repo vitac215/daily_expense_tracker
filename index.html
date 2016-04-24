@@ -51,7 +51,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Daily Expense Tracker</a>
+                <a class="navbar-brand">Daily Expense Tracker</a>
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
@@ -59,13 +59,13 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <div class="inline" id="loginstatus">Guest</div><b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-registered"></i><div class="inline" id="register_btn"> Register</div></a>
+                            <a href="#" id="register_btn"><i class="fa fa-fw fa-location-arrow"></i><div class="inline"> Register</div></a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-chevron-circle-right"></i><div class="inline" id="login_btn"> Log In</div></a>
+                            <a href="#" id="login_btn"><i class="fa fa-fw fa-chevron-circle-right"></i><div class="inline"> Log In</div></a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-power-off"></i><div class="inline" id="logout_btn"> Log Out</div></a>
+                            <a href="#" id="logout_btn"><i class="fa fa-fw fa-power-off"></i><div class="inline"> Log Out</div></a>
                         </li>
                     </ul>
                 </li>
@@ -74,11 +74,12 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li>
-                        <a href="#"><i class="fa fa-fw fa-minus-square-o"></i><div class="inline" id="expense_btn"> Expense</div></a>
-                        <a href="#"><i class="fa fa-fw fa-plus-square-o"></i><div class="inline" id="income_btn"> Income</div></a>
-                        <a href="#"><i class="fa fa-fw fa-arrow-circle-o-right"></i><div class="inline" id="debt_btn"> Debt</div></a>
-                        <a href="#"><i class="fa fa-fw fa-arrow-circle-o-left"></i><div class="inline" id="credit_btn"> Credit</div></a>
-                        <a href="#"><i class="fa fa-fw fa-star-o"></i><div class="inline" id="summary_btn"> Summary</div></a>
+                    	<a href="#" id="dash_btn"><i class="fa fa-fw fa-dashboard"></i><div class="inline"> Dashboard</div></a>
+                        <a href="#" id="expense_btn"><i class="fa fa-fw fa-minus-square-o"></i><div class="inline"> Expense</div></a>
+                        <a href="#" id="income_btn"><i class="fa fa-fw fa-plus-square-o"></i><div class="inline"> Income</div></a>
+                        <a href="#" id="debt_btn"><i class="fa fa-fw fa-arrow-circle-o-right"></i><div class="inline"> Debt</div></a>
+                        <a href="#" id="credit_btn"><i class="fa fa-fw fa-arrow-circle-o-left"></i><div class="inline"> Credit</div></a>
+                        <a href="#" id="summary_btn"><i class="fa fa-fw fa-star-o"></i><div class="inline"> Summary</div></a>
                     </li>
                 </ul>
             </div>
@@ -96,63 +97,65 @@
                     <div class="col-lg-12">
                     	<a href="#" id="btn_date_previous"><i class="fa fa-3x fa-caret-left"></i></a>
                         <h1 class="page-headerr" id="current_date">
-                            04/17/2016
+                            
                         </h1>
                     	<a href="#" id="btn_date_next"><i class="fa fa-3x fa-caret-right"></i></a>
                     </div>
                 </div>
                 <!-- /.row -->
 
-                <div class="row">
-                    <div class="col-lg-12">
-						<div class="well">
-							<div id="search_btn" class="inline">
-								Search: <input type="text" class="form-control">
+                <div class="dashlog">
+	                <div class="row">
+	                    <div class="col-lg-12">
+							<div class="well">
+								<div id="search_btn" class="inline">
+									Search: <input type="text" class="form-control">
+								</div>
+								Sort by: 
+								<div id="sort_btn" class="inline">
+									<select class="form-control select" id="sort_option">
+										<option value="Time">Time</option>
+										<option value="category">Categoty</option>
+										<option value="amt">Amount</option>
+									</select>
+								</div><!-- sort_btn -->
 							</div>
-							Sort by: 
-							<div id="sort_btn" class="inline">
-								<select class="form-control select" id="sort_option">
-									<option value="Time">Time</option>
-									<option value="category">Categoty</option>
-									<option value="amt">Amount</option>
-								</select>
-							</div><!-- sort_btn -->
-						</div>
-                    </div>	<!-- col-lg-12 -->
-                </div>
-                <!-- /.row -->
+	                    </div>	<!-- col-lg-12 -->
+	                </div>
+	                <!-- /.row -->
 
-                <div class="row">
-                    <div class="col-lg-12 itemlog">     	
-                    	<div class="list-group-item list-group-item-success">
-                    		<div class="inline item_name">Income</div>
-                    		<div class="inline item_amt">
-                    			<div class="inline currency">$</div>
-                    			100
-                    		</div>
-                    		<div class="inline item_category">Category: General</div>
-                    		<div class="inline item_note">Note: from Income.inc</div>
-                    	</div>
-                    	<div class="list-group-item list-group-item-warning">
-                    		<div class="inline item_name">Zootopia</div>
-                    		<div class="inline item_amt">
-                    			<div class="inline currency">$</div>
-                    			50
-                    		</div>
-                    		<div class="inline item_category">Category: Entertain</div>
-                    		<div class="inline item_note">Note: Good movie</div>
-                    	</div>
-                    	<div class="list-group-item list-group-item-default">
-                    		<div class="inline item_debt">Debt to: Peter</div>
-                    		<div class="inline item_amt">
-								<div class="inline currency">$</div>
-								30
-                    		</div>
-                    		<div class="inline item_category">Category: Debt</div>
-                    		<div class="inline item_note">Note: Repay in 10 days</div>
-                    	</div>
- 					</div> <!-- itemlog -->
-                </div> <!-- /.row -->
+	                <div class="row">
+	                    <div class="col-lg-12 itemlog">     	
+	                    	<div class="list-group-item list-group-item-success">
+	                    		<div class="inline item_name">Income</div>
+	                    		<div class="inline item_amt">
+	                    			<div class="inline currency">$</div>
+	                    			100
+	                    		</div>
+	                    		<div class="inline item_category">Category: General</div>
+	                    		<div class="inline item_note">Note: from Income.inc</div>
+	                    	</div>
+	                    	<div class="list-group-item list-group-item-warning">
+	                    		<div class="inline item_name">Zootopia</div>
+	                    		<div class="inline item_amt">
+	                    			<div class="inline currency">$</div>
+	                    			50
+	                    		</div>
+	                    		<div class="inline item_category">Category: Entertain</div>
+	                    		<div class="inline item_note">Note: Good movie</div>
+	                    	</div>
+	                    	<div class="list-group-item list-group-item-default">
+	                    		<div class="inline item_debt">Debt to: Peter</div>
+	                    		<div class="inline item_amt">
+									<div class="inline currency">$</div>
+									30
+	                    		</div>
+	                    		<div class="inline item_category">Category: Debt</div>
+	                    		<div class="inline item_note">Note: Repay in 10 days</div>
+	                    	</div>
+	 					</div> <!-- itemlog -->
+	                </div> <!-- /.row -->
+                </div> <!-- dashlog -->
 
                 <div class="row">
                 	<div class="col-lg-12 summarylog">  
@@ -192,17 +195,17 @@
 					<form id="registerForm">
 						<div class="register_username">
 							<div class="inline modalcss">Username: </div>
-							<input type="text" class="form-control">
+							<input type="text" class="form-control" id="register_username">
 						</div>
 						<div class="register_pwd">
 							<div class="inline modalcss">Password: </div>
-							<input type="password" class="form-control">
+							<input type="password" class="form-control" id="register_pwd">
 						</div>				
 					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Register</button>
+					<button type="button" class="btn btn-primary" id="registeron_btn">Register</button>
 				</div>
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
@@ -222,17 +225,17 @@
 					<form id="loginForm">
 						<div class="login_username">
 							<div class="inline modalcss">Username: </div>
-							<input type="text" class="form-control">
+							<input type="text" class="form-control" id="login_username">
 						</div>
 						<div class="login_pwd">
 							<div class="inline modalcss">Password: </div>
-							<input type="password" class="form-control">
+							<input type="password" class="form-control" id="login_pwd">
 						</div>				
 					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Log In</button>
+					<button type="button" class="btn btn-primary" id="loginon_btn">Log In</button>
 				</div>
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
@@ -252,16 +255,16 @@
 					<form id="addExpenseForm">
 						<div class="expense_name">
 							<div class="inline modalcss">Item Name: </div>
-							<input type="text" class="form-control">
+							<input type="text" class="form-control" id="addexpense_name">
 						</div>
 						<div class="expense_amt">
 							<div class="inline modalcss">Amount: </div>
-							<input type="number" step="any" class="form-control">
+							<input type="number" step="any" class="form-control" id="addexpense_amt">
 						</div>
 						<div class="expense_category">
 							<div class="inline category">Category: </div>
 							<div class="inline modalcss">
-								<select class="form-control select" id="category_option">
+								<select class="form-control select" id="addExpense_category_option">
 									<option value="general">General</option>
 									<option value="personal">Personal</option>
 									<option value="food">Food</option>
@@ -277,13 +280,13 @@
 						</div><!-- expense_category -->					
 						<div class="expense_note">
 							<div class="inline modalcss">Note: </div>
-							<input type="text" class="form-control">	
+							<input type="text" class="form-control" id="addexpense_note">	
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Add</button>
+					<button type="button" class="btn btn-primary" id="addExpenseOn_btn">Add</button>
 				</div>
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
@@ -302,16 +305,16 @@
 					<form id="editExpenseForm">
 						<div class="expense_name">
 							<div class="inline modalcss">Item Name: </div>
-							<input type="text" class="form-control" placeholder="Item Name">
+							<input type="text" class="form-control" placeholder="Item Name" id="editexpense_name">
 						</div>
 						<div class="expense_amt">
 							<div class="inline modalcss">Amount: </div>
-							<input type="number" step="any" class="form-control">
+							<input type="number" step="any" class="form-control" id="editexpense_amt">
 						</div>
 						<div class="expense_category">
 							<div class="inline category">Category: </div>
 							<div class="inline modalcss">
-								<select class="form-control select" id="category_option">
+								<select class="form-control select" id="editExpense_category_option">
 									<option value="general">General</option>
 									<option value="personal">Personal</option>
 									<option value="food">Food</option>
@@ -327,14 +330,14 @@
 						</div>	<!-- expense_category -->		
 						<div class="expense_note">
 							<div class="inline modalcss">Note: </div>
-							<input type="text" class="form-control" placeholder="Note">	
+							<input type="text" class="form-control" placeholder="Note" id="editexpense_note">	
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Delete</button>
-					<button type="button" class="btn btn-primary">Edit</button>
+					<button type="button" class="btn btn-primary" id="deleteExpenseOn_btn">Delete</button>
+					<button type="button" class="btn btn-primary" id="editExpenseOn_btn">Edit</button>
 				</div>
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
@@ -354,16 +357,16 @@
 					<form id="addIncomeForm">
 						<div class="income_name">
 							<div class="inline modalcss">Item Name: </div>
-							<input type="text" class="form-control">
+							<input type="text" class="form-control" id="addincome_name">
 						</div>
 						<div class="income_amt">
 							<div class="inline modalcss">Amount: </div>
-							<input type="number" step="any" class="form-control">
+							<input type="number" step="any" class="form-control" id="addincome_amt">
 						</div>
 						<div class="income_category">
 							<div class="inline category">Category: </div>
 							<div class="inline modalcss">
-								<select class="form-control select" id="category_option">
+								<select class="form-control select" id="addIncome_category_option">
 									<option value="general">General</option>
 									<option value="personal">Personal</option>
 									<option value="food">Food</option>
@@ -379,13 +382,13 @@
 						</div><!-- category -->					
 						<div class="income_note">
 							<div class="inline modalcss">Note: </div>
-							<input type="text" class="form-control">	
+							<input type="text" class="form-control" id="addincome_note">	
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Add</button>
+					<button type="button" class="btn btn-primary" id="addIncomeOn_btn">Add</button>
 				</div>
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
@@ -405,16 +408,16 @@
 					<form id="editIncomeForm">
 						<div class="income_name">
 							<div class="inline modalcss">Item Name: </div>
-							<input type="text" class="form-control" placeholder="Item Name">
+							<input type="text" class="form-control" placeholder="Item Name" id="editincome_name">
 						</div>
 						<div class="income_amt">
 							<div class="inline modalcss">Amount: </div>
-							<input type="number" step="any" class="form-control">
+							<input type="number" step="any" class="form-control" id="editincome_amt">
 						</div>
 						<div class="income_category">
 							<div class="inline category">Category: </div>
 							<div class="inline modalcss">
-								<select class="form-control select" id="category_option">
+								<select class="form-control select" id="editIncome_category_option">
 									<option value="general">General</option>
 									<option value="personal">Personal</option>
 									<option value="food">Food</option>
@@ -430,14 +433,14 @@
 						</div>	<!-- category -->		
 						<div class="income_note">
 							<div class="inline modalcss">Note: </div>
-							<input type="text" class="form-control" placeholder="Note">	
+							<input type="text" class="form-control" placeholder="Note" id="editincome_note">	
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Delete</button>
-					<button type="button" class="btn btn-primary">Edit</button>
+					<button type="button" class="btn btn-primary" id="deleteIncomeOn_btn">Delete</button>
+					<button type="button" class="btn btn-primary" id="editIncomeOn_btn">Edit</button>
 				</div>
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
@@ -455,24 +458,24 @@
 				</div>
 				<div class="modal-body">
 					<form id="addDebtModalForm">
-						<div class="debt_From">
+						<div class="debt_To">
 							<div class="inline modalcss">To: </div>
-							<input type="text" class="form-control" placeholder="username">
+							<input type="text" class="form-control" placeholder="username" id="adddebt_username">
 						</div>
 						<div class="debt_amt">
 							<div class="inline modalcss">Amount: </div>
-							<input type="number" step="any" class="form-control">
+							<input type="number" step="any" class="form-control" id="adddebt_amt">
 						</div>
 						<!-- default category is: debt -->				
 						<div class="debt_note">
 							<div class="inline modalcss">Note: </div>
-							<input type="text" class="form-control">	
+							<input type="text" class="form-control" id="adddebt_note">	
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Add</button>
+					<button type="button" class="btn btn-primary" id="addDebtOn_btn">Add</button>
 				</div>
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
@@ -490,23 +493,23 @@
 				<div class="modal-body">
 					<form id="editDebtModalForm">
 						<div class="debt_From">
-							<div class="inline modalcss">To Username</div>
+							<div class="inline modalcss" id="editdebt_username">To Username</div>
 						</div>
 						<div class="debt_amt">
 							<div class="inline modalcss">Amount: </div>
-							<input type="number" step="any" class="form-control">
+							<input type="number" step="any" class="form-control" id="editdebt_amt">
 						</div>
 						<!-- default category is: debt -->				
 						<div class="debt_note">
 							<div class="inline modalcss">Note: </div>
-							<input type="text" class="form-control">	
+							<input type="text" class="form-control" id="editdebt_note">	
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Delete</button>
-					<button type="button" class="btn btn-primary">Edit</button>
+					<button type="button" class="btn btn-primary" id="deleteDebtOn_btn">Delete</button>
+					<button type="button" class="btn btn-primary" id="editDebtOn_btn">Edit</button>
 				</div>
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
@@ -523,24 +526,24 @@
 				</div>
 				<div class="modal-body">
 					<form id="addCreditModalForm">
-						<div class="credit_From">
+						<div class="credit_Form">
 							<div class="inline modalcss">From: </div>
-							<input type="text" class="form-control" placeholder="username">
+							<input type="text" class="form-control" placeholder="username" id="addcredit_username">
 						</div>
 						<div class="credit_amt">
 							<div class="inline modalcss">Amount: </div>
-							<input type="number" step="any" class="form-control">
+							<input type="number" step="any" class="form-control" id="addcredit_amt">
 						</div>
 						<!-- default category is: credit -->		
 						<div class="credit_note">
 							<div class="inline modalcss">Note: </div>
-							<input type="text" class="form-control">	
+							<input type="text" class="form-control" id="addcredit_note">	
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Add</button>
+					<button type="button" class="btn btn-primary" id="addCreditOn_btn">Add</button>
 				</div>
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
@@ -557,24 +560,24 @@
 				</div>
 				<div class="modal-body">
 					<form id="editCreditModalForm">
-						<div class="credit_From">
-							<div class="inline modalcss" style="display:inline;">From Username</div>
+						<div class="credit_Form">
+							<div class="inline modalcss" style="display:inline;" id="editcredit_username">From Username</div>
 						</div>
 						<div class="credit_amt">
 							<div class="inline modalcss">Amount: </div>
-							<input type="number" step="any" class="form-control">
+							<input type="number" step="any" class="form-control" id="editcredit_amt">
 						</div>
 						<!-- default category is: credit -->			
 						<div class="credit_note">
 							<div class="inline modalcss">Note: </div>
-							<input type="text" class="form-control">	
+							<input type="text" class="form-control" id="editcredit_note">	
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Delete</button>
-					<button type="button" class="btn btn-primary">Edit</button>
+					<button type="button" class="btn btn-primary" id="deleteCreditOn_btn">Delete</button>
+					<button type="button" class="btn btn-primary" id="editCreditOn_btn">Edit</button>
 				</div>
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
@@ -602,7 +605,7 @@
     <script src="js/bootstrap.min.js"></script>
 
     <!-- JavaScript -->
-    <script src="js/budget.js"></script>
+    <script src="budget.js"></script>
 
     <!-- Morris Charts JavaScript -->
 <!--     <script src="js/plugins/morris/raphael.min.js"></script>

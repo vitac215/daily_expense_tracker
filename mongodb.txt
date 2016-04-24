@@ -1,0 +1,9 @@
+sudo mongod
+
+sudo mongo
+
+use budget
+
+db.createCollection('user')
+
+db.user.find()

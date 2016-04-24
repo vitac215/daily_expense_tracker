@@ -299,3 +299,9 @@ body {
     }
 
 }
+
+
+/*function: hide stuff*/
+.summarylog, #logout_btn {
+    display: none;
+}
