@@ -280,6 +280,12 @@ body {
     margin: 15px;
 }
 
+.inline.modalcss2 {
+    font-weight: bold;
+    font-size: 120%;
+    margin: 15px
+}
+
 .inline.category {
     font-weight: bold;
     font-size: 120%;
