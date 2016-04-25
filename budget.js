@@ -73,6 +73,7 @@ $(function(){
 		// Display new days
 		updateDate();
 		displayItem();
+		showdash();
 	});
 
 	// When the previous button is pressed...
@@ -81,6 +82,7 @@ $(function(){
 		// Display new days
 		updateDate();
 		displayItem();
+		showdash();
 	});
 
 
@@ -180,6 +182,14 @@ $(function(){
 	} // End of updateDate function
 
 
+	// Helper function to create a fake item on index.html to ensure search works properly
+	function fake() {
+		$('.itemlog').append(
+			'<li id="fake"> <div class="inline item_name"></div> <div class="inline item_amt"> <div class="inline currency"></div> </div> <div class="inline item_category"></div> <div class="inline item_note"></div> </li>'
+		);
+	}
+
+
 
 	// Update and display the itemlog  ##need modify
 	function displayItem() {
@@ -196,13 +206,14 @@ $(function(){
 				if (data.success == false) {
 					// Clear the itemlog  
 					$('.itemlog').empty();
+					fake();
 				}
 				else {
 					console.log(data);
-
 					
-					// Clear the itemlog  
+					// Clear the itemlog and make the fake item 
 					$('.itemlog').empty(); 
+					fake();
 
 					// Income: success
 					// Expense: warning
@@ -210,10 +221,10 @@ $(function(){
 					// Credit: default
 
 					// Prepare the insert div
-					$success = '<div class="list-group-item list-group-item-success"'; // add item_id
-					$warning = '<div class="list-group-item list-group-item-warning"'; // add item_id
-					$info = '<div class="list-group-item list-group-item-info"'; // add item_id
-					$default = '<div class="list-group-item list-group-item-default"'; // add item_id
+					$success = '<li class="list-group-item list-group-item-success"'; // add item_id
+					$warning = '<li class="list-group-item list-group-item-warning"'; // add item_id
+					$info = '<li class="list-group-item list-group-item-info"'; // add item_id
+					$default = '<li class="list-group-item list-group-item-default"'; // add item_id
 					$name = '<div class="inline item_name">'; 
 					$name_debt = '<div class="inline item_name">Debt to: '; 
 					$name_credit = '<div class="inline item_name">Credit from: '; 
@@ -225,17 +236,23 @@ $(function(){
 					for (var i=0; i<data.length; i++) {
 						// Check the date 
 						if (data[i].item_date == $("#current_date").html()) {
-							if (data[i].item_type == "income") {
-								$('.itemlog').append($success + 'id ="' + data[i].item_id + '">' + $name + data[i].item_name + '</div>' + $amt + data[i].item_amt + '</div>' + $category + data[i].item_category + '</div>' + $note + data[i].item_note + '</div></div>');
-							}
-							if (data[i].item_type == "expense") {
-								$('.itemlog').append($warning + 'id ="' + data[i].item_id + '">' + $name + data[i].item_name + '</div>' + $amt + data[i].item_amt + '</div>' + $category + data[i].item_category + '</div>' + $note + data[i].item_note + '</div></div>');
-							}
-							if (data[i].item_type == "debt") {
-								$('.itemlog').append($info + 'id ="' + data[i].item_id + '">' + $name_debt + data[i].item_name + '</div>' + $amt + data[i].item_amt + '</div>' + $category + data[i].item_category + '</div>' + $note + data[i].item_note + '</div></div>');
-							}
-							if (data[i].item_type == "credit") {
-								$('.itemlog').append($default + 'id ="' + data[i].item_id + '">' + $name_credit + data[i].item_name + '</div>' + $amt + data[i].item_amt + '</div>' + $category + data[i].item_category + '</div>' + $note + data[i].item_note + '</div></div>');
+							// If the category selected is all, or matches the item category
+							if ($("#display_option option:selected").val() == "all" || $("#display_option option:selected" ).val()== data[i].item_category.toLowerCase()) {
+									if (data[i].item_type == "income") {
+									$('.itemlog').append($success + 'id ="' + data[i].item_id + '">' + $name + data[i].item_name + '</div>' + $amt + data[i].item_amt + '</div>' + $category + data[i].item_category + '</div>' + $note + data[i].item_note + '</div></li>');
+								}
+								if (data[i].item_type == "expense") {
+									$('.itemlog').append($warning + 'id ="' + data[i].item_id + '">' + $name + data[i].item_name + '</div>' + $amt + data[i].item_amt + '</div>' + $category + data[i].item_category + '</div>' + $note + data[i].item_note + '</div></li>');
+								}
+								if (data[i].item_type == "debt") {
+									$('.itemlog').append($info + 'id ="' + data[i].item_id + '">' + $name_debt + data[i].item_name + '</div>' + $amt + data[i].item_amt + '</div>' + $category + data[i].item_category + '</div>' + $note + data[i].item_note + '</div></li>');
+								}
+								if (data[i].item_type == "credit") {
+									$('.itemlog').append($default + 'id ="' + data[i].item_id + '">' + $name_credit + data[i].item_name + '</div>' + $amt + data[i].item_amt + '</div>' + $category + data[i].item_category + '</div>' + $note + data[i].item_note + '</div></div>');
+								}						
+							} // End of category check
+							else {
+								// do nothing
 							}
 						} // End of date check
 						else {
@@ -245,7 +262,11 @@ $(function(){
 				} // End of else
 			});	// End of done
 		} // End of if
+
+		// Call the search function
+		search();
 	} // End of displayItem function
+	$("#display_option").change(displayItem);
 
 
 	// Register
@@ -310,6 +331,9 @@ $(function(){
 				// Hide the login_btn
 				$("#login_btn").hide();
 
+				// Display the search_btn
+				$("#search_btn").show();
+
 				// Update the itemlog
 				displayItem();
 			}
@@ -341,9 +365,13 @@ $(function(){
 
 			// Clear the itemlog  
 			$('.itemlog').empty();
+			fake();
 
 			// Display the login_btn
 			$("#login_btn").show();
+
+			// Hide the search_btn
+			$("#search_btn").hide();
 
 			}
 		});
@@ -595,7 +623,7 @@ $(function(){
 	 	else {
 			var editexpense_name = $('#editexpense_name').val();
 			var editexpense_amt = $('#editexpense_amt').val(); 
-			console.log(editexpense_id);
+			// console.log(editexpense_id);
 
 			// Check if the input fields are empty
 			if (editexpense_name == "" || editexpense_amt == "") {
@@ -643,7 +671,7 @@ $(function(){
 			alert("Please log in first!");
 		}
 	 	else {
-			console.log(editexpense_id);
+			// console.log(editexpense_id);
 
 			// Post data to php
 			$.ajax({
@@ -690,7 +718,7 @@ $(function(){
 	 	else {
 			var editincome_name = $('#editincome_name').val();
 			var editincome_amt = $('#editincome_amt').val(); 
-			console.log(editincome_id);
+			// console.log(editincome_id);
 
 			// Check if the input fields are empty
 			if (editincome_name == "" || editincome_amt == "") {
@@ -733,7 +761,7 @@ $(function(){
 			alert("Please log in first!");
 		}
 	 	else {
-			console.log(editincome_id);
+			// console.log(editincome_id);
 
 			// Post data to php
 			$.ajax({
@@ -781,7 +809,7 @@ $(function(){
 		}
 	 	else {
 			var editdebt_amt = $('#editdebt_amt').val(); 
-			console.log(editdebt_id);
+			// console.log(editdebt_id);
 
 			// Check if the input fields are empty
 			if (editdebt_amt == "") {
@@ -872,7 +900,7 @@ $(function(){
 		}
 	 	else {
 			var editcredit_amt = $('#editcredit_amt').val(); 
-			console.log(editcredit_id);
+			// console.log(editcredit_id);
 
 			// Check if the input fields are empty
 			if (editdebt_amt == "") {
@@ -942,6 +970,108 @@ $(function(){
 
 
 
+	// Summary function
+	function summary() {
+		// Clear the log
+		$("#totalexpense").empty();
+		$("#totalincome").empty();
+		$("#net").empty();
+
+		// Get the num strings for expense
+		var rawnums_expense = [];
+		$(".list-group-item.list-group-item-warning").children(".item_amt").each( function(i,e) {
+			rawnums_expense.push($(e).html());
+		});
+		// Parse the string to get ints
+		var totalexpense = 0;
+		for (var i=0; i<rawnums_expense.length; i++) {
+			rawnums_expense[i] = parseInt(rawnums_expense[i].replace(/[^0-9\.]/g, ''), 10); // gives the int part
+			totalexpense = totalexpense + rawnums_expense[i];
+		}
+
+
+		// Get the num strings for income
+		var rawnums_income = [];
+		$(".list-group-item.list-group-item-success").children(".item_amt").each( function(i,e) {
+			rawnums_income.push($(e).html());
+		});
+		// Parse the string to get ints
+		var totalincome = 0;
+		for (var i=0; i<rawnums_income.length; i++) {
+			rawnums_income[i] = parseInt(rawnums_income[i].replace(/[^0-9\.]/g, ''), 10); // gives the int part
+			totalincome = totalincome + rawnums_income[i];
+		}
+
+		var totalnet = totalincome - totalexpense;
+
+
+		// Hide the dashlog
+		$(".dashlog").hide();
+		// Display the summarylogs
+		$(".summarylog").show();
+
+
+		// Do the math
+		$("#totalexpense").html(totalexpense);
+		$("#totalincome").html(totalincome);
+		$("#net").html(totalnet);
+	}
+	$("#summary_btn").click(summary);	
+
+
+
+
+	// Change background color function
+	function changeBackColor() {
+		if($("#backcolor_option option:selected").val() == "White"){
+	       $('#page-wrapper').css('background-color', '#fff');
+	       $('body').css('background-color', '#fff');
+		}
+
+		if($("#backcolor_option option:selected").val() == "Red"){
+	       $('#page-wrapper').css('background-color', '#ffe6e6');
+	       $('body').css('background-color', '#ffe6e6');
+		}
+
+		if($("#backcolor_option option:selected").val() == "Orange"){
+	       $('#page-wrapper').css('background-color', '#fff0e6');
+	       $('body').css('background-color', '#fff0e6');
+		}
+
+		if($("#backcolor_option option:selected").val() == "Yellow"){
+	       $('#page-wrapper').css('background-color', '#ffffe6');
+	       $('body').css('background-color', '#ffffe6');
+		}
+
+		if($("#backcolor_option option:selected").val() == "Green"){
+	       $('#page-wrapper').css('background-color', '#eeffe6');
+	       $('body').css('background-color', '#eeffe6');
+		}
+
+		if($("#backcolor_option option:selected").val() == "Blue"){
+	       $('#page-wrapper').css('background-color', '#e6ebff');
+	       $('body').css('background-color', '#e6ebff');
+		}
+
+		if($("#backcolor_option option:selected").val() == "Pink"){
+	       $('#page-wrapper').css('background-color', '#ffe6ff');
+	       $('body').css('background-color', '#ffe6ff');
+		}
+	}
+	$("#backcolor_option").change(changeBackColor);
+
+
+
+	// Real time search
+    function search() {
+		var options = {
+			valueNames: ['item_name', 'item_amt' , 'item_category', 'item_note']
+		};
+		var docs =  new List('search', options);   	
+    }
+    $("#search_content").click(search);
+
+
 
 	// Helper function to hide the summarylog and display the dashlog
 	function showdash() {
@@ -952,6 +1082,8 @@ $(function(){
 		$(".summarylog").hide();
 	}
 	
+
+
 	// Bind the button and open the modal
 	$("#register_btn").on('click', function() {
 		$("#registerModal").modal();
@@ -981,13 +1113,6 @@ $(function(){
 		showdash();
 	});
 
-	// Bind the summary button, if pressed, hide the itemlog and display the summarylog
-	$("#summary_btn").on('click', function() {
-		// Hide the dashlog
-		$(".dashlog").hide();
-		// Display the summarylogs
-		$(".summarylog").show();
-	});
 
 	$("#dash_btn").on('click', function() {
 		// Display the itemlog

@@ -108,53 +108,76 @@
 	                <div class="row">
 	                    <div class="col-lg-12">
 							<div class="well">
-								<div id="search_btn" class="inline">
-									Search: <input type="text" class="form-control">
+								Display by:
+								<div id="display_btn" class="inline">
+									<select class="form-control select" id="display_option">
+										<option value="all">All</option>
+										<option value="general">General</option>
+										<option value="personal">Personal</option>
+										<option value="food">Food</option>
+										<option value="groceries">Groceries</option>
+										<option value="shopping">Shopping</option>
+										<option value="entertain">Entertain</option>
+										<option value="transport">Transport</option>
+										<option value="housing">Housing</option>
+										<option value="medical">Medical</option>
+										<option value="academic">Academic</option>
+									</select>									
 								</div>
-								Sort by: 
-								<div id="sort_btn" class="inline">
-									<select class="form-control select" id="sort_option">
-										<option value="Time">Time</option>
-										<option value="category">Categoty</option>
-										<option value="amt">Amount</option>
-									</select>
-								</div><!-- sort_btn -->
+								<div class="inline" id="changecolor">
+								Background Color:
+									<div class="changecolor inline">
+										<select class="form-control select" id="backcolor_option">
+											<option>White</option>
+											<option>Red</option>
+											<option>Orange</option>
+											<option>Yellow</option>
+											<option>Green</option>
+											<option>Blue</option>
+											<option>Pink</option>
+										</select>
+									</div>
+								</div><!-- inline -->
 							</div>
 	                    </div>	<!-- col-lg-12 -->
 	                </div>
 	                <!-- /.row -->
 
-	                <div class="row">
-	                    <div class="col-lg-12 itemlog">     	
-	                    	<div class="list-group-item list-group-item-success">
-	                    		<div class="inline item_name">Income</div>
-	                    		<div class="inline item_amt">
-	                    			<div class="inline currency">$</div>
-	                    			100
-	                    		</div>
-	                    		<div class="inline item_category">Category: General</div>
-	                    		<div class="inline item_note">Note: from Income.inc</div>
-	                    	</div>
-	                    	<div class="list-group-item list-group-item-warning">
-	                    		<div class="inline item_name">Zootopia</div>
-	                    		<div class="inline item_amt">
-	                    			<div class="inline currency">$</div>
-	                    			50
-	                    		</div>
-	                    		<div class="inline item_category">Category: Entertain</div>
-	                    		<div class="inline item_note">Note: Good movie</div>
-	                    	</div>
-	                    	<div class="list-group-item list-group-item-default">
-	                    		<div class="inline item_debt">Debt to: Peter</div>
-	                    		<div class="inline item_amt">
+	                <div id="search">
+						<div id="search_btn" class="inline">
+							Search: <input type="text" class="form-control search" id="search_content">
+						</div>
+		                <ul class=" col-lg-12 itemlog list">	
+		                    <li id="fake">
+		                    	<div class="inline item_name"></div>
+		                    	<div class="inline item_amt">
+		                    		<div class="inline currency"></div>
+		                    			
+		                    	</div>
+		                    	<div class="inline item_category"></div>
+		                    	<div class="inline item_note"></div>
+		                    </li>
+		                    <!-- 
+		                    <li class="list-group-item list-group-item-warning">
+		                    	<div class="inline item_name">Zootopia</div>
+		                    	<div class="inline item_amt">
+		                    		<div class="inline currency">$</div>
+		                    			50
+		                    	</div>
+		                    	<div class="inline item_category">Category: Entertain</div>
+		                    	<div class="inline item_note">Note: Good movie</div>
+		                    </li>
+		                    <li class="list-group-item list-group-item-default">
+		                    	<div class="inline item_debt">Debt to: Peter</div>
+		                    	<div class="inline item_amt">
 									<div class="inline currency">$</div>
-									30
-	                    		</div>
-	                    		<div class="inline item_category">Category: Debt</div>
-	                    		<div class="inline item_note">Note: Repay in 10 days</div>
-	                    	</div>
-	 					</div> <!-- itemlog -->
-	                </div> <!-- /.row -->
+										30
+		                    	</div>
+		                    	<div class="inline item_category">Category: Debt</div>
+		                    	<div class="inline item_note">Note: Repay in 10 days</div>
+		                    </li> -->
+		 				</ul> <!-- itemlog -->
+		            </div><!-- search -->
                 </div> <!-- dashlog -->
 
                 <div class="row">
@@ -606,6 +629,20 @@
 
     <!-- JavaScript -->
     <script src="budget.js"></script>
+
+	<script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
+
+<!--     <script type="text/javascript">
+    	function search() {
+			var options = {
+				valueNames: ['item_name', 'item_amt' , 'item_category', 'item_note']
+			};
+
+			var docs =  new List('search', options);   		
+    	}
+    	$("#search_content").change(search);
+
+    </script> -->
 
     <!-- Morris Charts JavaScript -->
 <!--     <script src="js/plugins/morris/raphael.min.js"></script>

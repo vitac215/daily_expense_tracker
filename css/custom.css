@@ -15,9 +15,6 @@ body {
     display: inline-block;
 }
 
-.form-control.select {
-    width: 120%;
-}
 
 @media(min-width:768px) {
     body {
@@ -220,8 +217,17 @@ body {
     height: 30px;
 }
 
+.form-control.select {
+    width: 100%;
+}
+
+.form-control.search {
+    width: 94.8%;
+}
+
 #search_btn {
-    margin-right: 10px;
+    display: none;
+    margin-bottom: 10px;
 }
 
 #current_date {
@@ -247,11 +253,28 @@ body {
     margin-left: 5%;
 }
 
+#changecolor {
+    margin-left: 25px;
+}
+
+#fake {
+    display: none;
+}
+
 
 /*item log css*/
 .inline.item_name, .inline.item_debt, .inline.item_credit {
     width: 25%;
     font-weight: bold;
+}
+
+.itemlog {
+    padding:0;
+    padding-top: 10px;
+}
+
+.itemlog > div.is-hidden {
+    display: none;
 }
 
 .inline.item_amt {
@@ -293,6 +316,12 @@ body {
     margin-right: 6%;
     display: inline;
 }
+
+#totalexpense, #totalincome, #net {
+    display: inline;
+    font-weight: bold;
+}
+
 
 
 @media(max-width: 480px) { /* if the broswer window is smaller than 480px */
