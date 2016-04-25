@@ -40,6 +40,7 @@
             $item_category   = htmlentities($item['item_category']);
             $item_note      = htmlentities($item['item_note']);
             $item_type      = htmlentities($item['item_type']); 
+            $item_date      = htmlentities($item['item_date']); 
 
             $temp = array(
                 "item_id"       => $item_id,
@@ -47,7 +48,8 @@
                 "item_amt"      => $item_amt,
                 "item_category" => $item_category,
                 "item_note"     => $item_note,
-                "item_type"     => $item_type
+                "item_type"     => $item_type,
+                "item_date"     => $item_date
             );      
 
             $data[] = $temp;     
@@ -58,8 +60,7 @@
     }
     else {
         echo json_encode(array(
-            "success" => false,
-            "message" => "Display items failed"
+            "success" => false
         ));
         $conn->close();
         exit;

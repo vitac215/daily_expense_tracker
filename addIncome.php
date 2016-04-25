@@ -20,10 +20,10 @@
     }
 
     // Get the post data
-    $expense_name = $_POST['expense_name'];
-    $expense_amt = intval($_POST['expense_amt']);
-    $expense_category = $_POST['expense_category'];
-    $expense_note = $_POST['expense_note'];
+    $income_name = $_POST['income_name'];
+    $income_amt = intval($_POST['income_amt']);
+    $income_category = $_POST['income_category'];
+    $income_note = $_POST['income_note'];
     $date = $_POST['date'];
 
 
@@ -38,11 +38,11 @@ try {
     $collection = $db->item;
 
 	$insert = array("username" => $username,
-                    "item_name" => $expense_name, 
-    				"item_amt" => $expense_amt,
-    				"item_category" => $expense_category, // if it's a debt item, the category is debt
-    				"item_note" => $expense_note,
-                    "item_type" => "expense",  // it can be expense, income, debt, or credit
+                    "item_name" => $income_name, 
+    				"item_amt" => $income_amt,
+    				"item_category" => $income_category, // if it's a debt item, the category is debt
+    				"item_note" => $income_note,
+                    "item_type" => "income",  // it can be expense, income, debt, or credit
                     "item_date" => $date
     );
 
@@ -50,7 +50,7 @@ try {
 
  	echo json_encode(array(
  		"success" => true,
-        "message" => "Expense added successfully"
+        "message" => "Income added successfully"
     ));
 	$conn->close();
 	exit;

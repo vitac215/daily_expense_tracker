@@ -72,6 +72,7 @@ $(function(){
 		updateNextDate();
 		// Display new days
 		updateDate();
+		displayItem();
 	});
 
 	// When the previous button is pressed...
@@ -79,6 +80,7 @@ $(function(){
 		updatePreviousDate();
 		// Display new days
 		updateDate();
+		displayItem();
 	});
 
 
@@ -182,7 +184,7 @@ $(function(){
 	// Update and display the itemlog  ##need modify
 	function displayItem() {
 		// Check login status
-		if (loginstatus.innerHTML != "Guest") {
+		if ($("#loginstatus").html() != "Guest") {
 			// Post data to php
 			$.ajax({
 				method: "POST",
@@ -192,29 +194,58 @@ $(function(){
 			.done(function(data){
 				// If there's illegal access
 				if (data.success == false) {
-					console.log(data.message);
+					// Clear the itemlog  
+					$('.itemlog').empty();
 				}
 				else {
 					console.log(data);
-				}
-				// else {
-				// 	// If the user is logined
-				// 	// Run through the event array
-				// 	for(var k=0; k<data.length; ++k) {
-				// 		// If the tag selected is all, or matches the event tag
-				// 		if ($('#eventTag').val() == "All" || $('#eventTag').val() == data[k].etag) {
-				// 			contentForEdit = data[k].econtent;
-				// 			titleForEdit = data[k].etitle;
-				// 			tagForEdit = data[k].etag;
-				// 			var  thisDate = parseInt(data[k].eday);
-				// 			$('#'+thisDate).append('<div class="eventDay" event-id="' + data[k].eid + '"' + 'event-content="' + contentForEdit + '"' + 'event-title="' + titleForEdit + '"' + 'event-tag="' + tagForEdit + '">' + data[k].etime + ' ' + data[k].etitle + '</div>');
-				// 		}
-				// 		// else, display nothing
-				// 	}
-				// }
-			});	
-		}
-	}
+
+					
+					// Clear the itemlog  
+					$('.itemlog').empty(); 
+
+					// Income: success
+					// Expense: warning
+					// Debt: info
+					// Credit: default
+
+					// Prepare the insert div
+					$success = '<div class="list-group-item list-group-item-success"'; // add item_id
+					$warning = '<div class="list-group-item list-group-item-warning"'; // add item_id
+					$info = '<div class="list-group-item list-group-item-info"'; // add item_id
+					$default = '<div class="list-group-item list-group-item-default"'; // add item_id
+					$name = '<div class="inline item_name">'; 
+					$name_debt = '<div class="inline item_name">Debt to: '; 
+					$name_credit = '<div class="inline item_name">Credit from: '; 
+					$amt = '<div class="inline item_amt">$ ';
+					$category = '<div class="inline item_category">Category: ';
+					$note = '<div class="inline item_note">Note: ';
+
+					// Run through the item array
+					for (var i=0; i<data.length; i++) {
+						// Check the date 
+						if (data[i].item_date == $("#current_date").html()) {
+							if (data[i].item_type == "income") {
+								$('.itemlog').append($success + 'id ="' + data[i].item_id + '">' + $name + data[i].item_name + '</div>' + $amt + data[i].item_amt + '</div>' + $category + data[i].item_category + '</div>' + $note + data[i].item_note + '</div></div>');
+							}
+							if (data[i].item_type == "expense") {
+								$('.itemlog').append($warning + 'id ="' + data[i].item_id + '">' + $name + data[i].item_name + '</div>' + $amt + data[i].item_amt + '</div>' + $category + data[i].item_category + '</div>' + $note + data[i].item_note + '</div></div>');
+							}
+							if (data[i].item_type == "debt") {
+								$('.itemlog').append($info + 'id ="' + data[i].item_id + '">' + $name_debt + data[i].item_name + '</div>' + $amt + data[i].item_amt + '</div>' + $category + data[i].item_category + '</div>' + $note + data[i].item_note + '</div></div>');
+							}
+							if (data[i].item_type == "credit") {
+								$('.itemlog').append($default + 'id ="' + data[i].item_id + '">' + $name_credit + data[i].item_name + '</div>' + $amt + data[i].item_amt + '</div>' + $category + data[i].item_category + '</div>' + $note + data[i].item_note + '</div></div>');
+							}
+						} // End of date check
+						else {
+							// do nothing
+						}
+					} // End of for loop
+				} // End of else
+			});	// End of done
+		} // End of if
+	} // End of displayItem function
 
 
 	// Register
@@ -234,6 +265,7 @@ $(function(){
 			}
 			else {
 				// If success...
+				alert(data.message);
 				// Close the modal
 				$("#registerModal").modal('hide');
 			}
@@ -275,6 +307,9 @@ $(function(){
 				// Display the logout_btn
 				$("#logout_btn").show();
 
+				// Hide the login_btn
+				$("#login_btn").hide();
+
 				// Update the itemlog
 				displayItem();
 			}
@@ -304,8 +339,12 @@ $(function(){
 			// Change the login status
 			$("#loginstatus").html("Guest");
 
-			// // Update the itemlog
-			displayItem();
+			// Clear the itemlog  
+			$('.itemlog').empty();
+
+			// Display the login_btn
+			$("#login_btn").show();
+
 			}
 		});
 	} // end of logoutAjax function
@@ -316,12 +355,13 @@ $(function(){
 	// Add expense 
 	$("#addExpenseOn_btn").on('click', function(){
 		// Check login status
-		if (loginstatus.innerHTML == "Guest") {
+		if ($("#loginstatus").html() == "Guest") {
 			alert("Please log in first!");
 		}
 	 	else {
 			var expense_name = $('#addexpense_name').val();
-			var expense_amt = $('#addexpense_amt').val();  
+			var expense_amt = $('#addexpense_amt').val(); 
+			var date = $("#current_date").html();
 
 			// Check if the input fields are empty
 			if (expense_name == "" || expense_amt == "") {
@@ -340,7 +380,7 @@ $(function(){
 				$.ajax({
 					method: "POST",
 					url: "addExpense.php",
-					data: {expense_name: expense_name, expense_amt: expense_amt, expense_category: expense_category, expense_note:expense_note, token_post: token}
+					data: {expense_name: expense_name, expense_amt: expense_amt, expense_category: expense_category, expense_note:expense_note, date: date, token_post: token}
 				})
 				.done(function(data){
 					if (data.success==false) {
@@ -355,17 +395,550 @@ $(function(){
 
 						// Update the itemlog
 						displayItem();
+
+						// Clear the form
+						$("#addexpense_name").val("");
+						$("#addexpense_amt").val("");
+						$("#addexpense_note").val("");
 					}
 				});
-				// Clear the form
-				$("#addexpense_name").val("");
-				$("#addexpense_amt").val("");
-				$("#addexpense_note").val("");
+
 			}
 		}
+	}); // End of addExpense function
+
+
+	// Add income
+	$("#addIncomeOn_btn").on('click', function(){
+		// Check login status
+		if ($("#loginstatus").html() == "Guest") {
+			alert("Please log in first!");
+		}
+	 	else {
+			var income_name = $('#addincome_name').val();
+			var income_amt = $('#addincome_amt').val(); 
+			var date = $("#current_date").html();
+
+			// Check if the input fields are empty
+			if (income_name == "" || income_amt == "") {
+				alert("Please enter the item name and amount");
+			}
+			else {
+				var income_category = $("#addIncome_category_option option:selected" ).val();
+				var income_note = $('#addincome_note').val();  
+
+				// Post data to php
+				$.ajax({
+					method: "POST",
+					url: "addIncome.php",
+					data: {income_name: income_name, income_amt: income_amt, income_category: income_category, income_note: income_note, date: date, token_post: token}
+				})
+				.done(function(data){
+					if (data.success==false) {
+						alert(data.message);
+					}
+					else {
+						// If success...
+						alert(data.message); // "Income added successfully"
+						
+						// Close the modal
+						$("#addIncomeModal").modal('hide');
+
+						// Update the itemlog
+						displayItem();
+
+						// Clear the form
+						$("#addincome_name").val("");
+						$("#addincome_amt").val("");
+						$("#addincome_note").val("");
+					}
+				});
+
+			}
+		}
+	}); // End of addIncome function
+
+
+	// Add debt
+	$("#addDebtOn_btn").on('click', function(){
+		// Check login status
+		if ($("#loginstatus").html() == "Guest") {
+			alert("Please log in first!");
+		}
+	 	else {
+			var debt_name = $('#adddebt_name').val(); // this is a username
+			var debt_amt = $('#adddebt_amt').val(); 
+			var date = $("#current_date").html();
+
+			// Check if the input fields are empty
+			if (debt_name == "" || debt_amt == "") {
+				alert("Please enter the username and amount");
+			}
+			else if (debt_name == $("#loginstatus").html()) {
+				alert("Username cannot be yourself");
+			}
+			else {
+				// Category is default to be debt
+				var debt_note = $('#adddebt_note').val();  
+
+				// Post data to php
+				$.ajax({
+					method: "POST",
+					url: "addDebt.php",
+					data: {debt_name: debt_name, debt_amt: debt_amt, debt_note: debt_note, date: date, token_post: token}
+				})
+				.done(function(data){
+					if (data.success==false) {
+						alert(data.message);
+					}
+					else {
+						// If success...
+						alert(data.message); // "Income added successfully"
+						
+						// Close the modal
+						$("#addDebtModal").modal('hide');
+
+						// Update the itemlog
+						displayItem();
+
+						// Clear the form
+						$("#adddebt_name").val("");
+						$("#adddebt_amt").val("");
+						$("#adddebt_note").val("");
+					}
+				});
+			}
+		}
+	}); // End of the addDebt function
+
+
+
+	// Add credit
+	$("#addCreditOn_btn").on('click', function(){
+		// Check login status
+		if ($("#loginstatus").html() == "Guest") {
+			alert("Please log in first!");
+		}
+	 	else {
+			var credit_name = $('#addcredit_name').val(); // this is a username
+			var credit_amt = $('#addcredit_amt').val(); 
+			var date = $("#current_date").html();
+
+			// Check if the input fields are empty
+			if (credit_name == "" || credit_amt == "") {
+				alert("Please enter the username and amount");
+			}
+			else if (credit_name == $("#loginstatus").html()) {
+				alert("Username cannot be yourself");
+			}
+			else {
+				// Category is default to be debt
+				var credit_note = $('#addcredit_note').val();  
+
+				// Post data to php
+				$.ajax({
+					method: "POST",
+					url: "addCredit.php",
+					data: {credit_name: credit_name, credit_amt: credit_amt, credit_note: credit_note, date: date, token_post: token}
+				})
+				.done(function(data){
+					if (data.success==false) {
+						alert(data.message);
+					}
+					else {
+						// If success...
+						alert(data.message); // "Income added successfully"
+						
+						// Close the modal
+						$("#addCreditModal").modal('hide');
+
+						// Update the itemlog
+						displayItem();
+
+						// Clear the form
+						$("#addcredit_name").val("");
+						$("#addcredit_amt").val("");
+						$("#addcredit_note").val("");
+					}
+				});
+			}
+		}
+	}); // End of the addDebt function
+
+
+
+	// Open the edit expense modal when the item is clicked
+	$(document).on('click', '.list-group-item.list-group-item-warning', function(e) {
+		// // Put the original content into the editbox
+		// foreditexpense_name = $(this).attr('expense_name');
+		// foreditexpense_amt = $(this).attr('expense_amt');
+		// foreditexpense_note = $(this).attr('expense_note');
+
+		// $('#editexpense_name').attr('placeholder', foreditexpense_name);
+		// $('#editexpense_amt').attr('placeholder', foreditexpense_amt);
+		// $('#editexpense_note').attr('placeholder', foreditexpense_note);
+
+		// Get the expense id
+		editexpense_id = $(this).attr('id');
+
+		// Open the modal
+		$("#editExpenseModal").modal();
+
 	});
 
+	// Edit expense
+	$("#editExpenseOn_btn").on('click', function(){
+		// Check login status
+		if ($("#loginstatus").html() == "Guest") {
+			alert("Please log in first!");
+		}
+	 	else {
+			var editexpense_name = $('#editexpense_name').val();
+			var editexpense_amt = $('#editexpense_amt').val(); 
+			console.log(editexpense_id);
 
+			// Check if the input fields are empty
+			if (editexpense_name == "" || editexpense_amt == "") {
+				alert("Please enter the item name and amount");
+			}
+			else {
+				var editexpense_category = $("#editExpense_category_option option:selected" ).val();
+				var editexpense_note = $('#editexpense_note').val();  
+
+				// console.log(expense_name);
+				// console.log(expense_amt);
+				// console.log(expense_category);
+				// console.log(expense_note);
+
+				// Post data to php
+				$.ajax({
+					method: "POST",
+					url: "editExpense.php",
+					data: {expense_id: editexpense_id, expense_name: editexpense_name, expense_amt: editexpense_amt, expense_category: editexpense_category, expense_note:editexpense_note, token_post: token}
+				})
+				.done(function(data){
+					if (data.success==false) {
+						alert(data.message);
+					}
+					else {
+						// If success...
+						alert(data.message); // "Expense edited successfully"
+						
+						// Close the modal
+						$("#editExpenseModal").modal('hide');
+
+						// Update the itemlog
+						displayItem();
+					}
+				});
+
+			}
+		}
+	}); // End of editExpense function
+
+	// Delete expense
+	$("#deleteExpenseOn_btn").on('click', function(){
+		// Check login status
+		if ($("#loginstatus").html() == "Guest") {
+			alert("Please log in first!");
+		}
+	 	else {
+			console.log(editexpense_id);
+
+			// Post data to php
+			$.ajax({
+				method: "POST",
+				url: "deleteExpense.php",
+				data: {expense_id: editexpense_id, token_post: token}
+			})
+			.done(function(data){
+				if (data.success==false) {
+					alert(data.message);
+				}
+				else {
+					// If success...
+					alert(data.message); // "Expense edited successfully"
+						
+					// Close the modal
+					$("#editExpenseModal").modal('hide');
+					
+					// Update the itemlog
+					displayItem();
+				}
+			});
+
+		}
+	}); // End of deleteExpense function
+
+
+	// Open the edit income modal when the item is clicked
+	$(document).on('click', '.list-group-item.list-group-item-success', function(e) {
+		// Get the income id
+		editincome_id = $(this).attr('id');
+
+		// Open the modal
+		$("#editIncomeModal").modal();
+
+	});
+
+	// Edit income
+	$("#editIncomeOn_btn").on('click', function(){
+		// Check login status
+		if ($("#loginstatus").html() == "Guest") {
+			alert("Please log in first!");
+		}
+	 	else {
+			var editincome_name = $('#editincome_name').val();
+			var editincome_amt = $('#editincome_amt').val(); 
+			console.log(editincome_id);
+
+			// Check if the input fields are empty
+			if (editincome_name == "" || editincome_amt == "") {
+				alert("Please enter the item name and amount");
+			}
+			else {
+				var editincome_category = $("#editIncome_category_option option:selected" ).val();
+				var editincome_note = $('#editincome_note').val();  
+
+				// Post data to php
+				$.ajax({
+					method: "POST",
+					url: "editIncome.php",
+					data: {income_id: editincome_id, income_name: editincome_name, income_amt: editincome_amt, income_category: editincome_category, income_note:editincome_note, token_post: token}
+				})
+				.done(function(data){
+					if (data.success==false) {
+						alert(data.message);
+					}
+					else {
+						// If success...
+						alert(data.message); // "Expense edited successfully"
+						
+						// Close the modal
+						$("#editIncomeModal").modal('hide');
+
+						// Update the itemlog
+						displayItem();
+					}
+				});
+
+			}
+		}
+	}); // End of editIncome function
+
+	// Delete income
+	$("#deleteIncomeOn_btn").on('click', function(){
+		// Check login status
+		if ($("#loginstatus").html() == "Guest") {
+			alert("Please log in first!");
+		}
+	 	else {
+			console.log(editincome_id);
+
+			// Post data to php
+			$.ajax({
+				method: "POST",
+				url: "deleteIncome.php",
+				data: {income_id: editincome_id, token_post: token}
+			})
+			.done(function(data){
+				if (data.success==false) {
+					alert(data.message);
+				}
+				else {
+					// If success...
+					alert(data.message); // "Expense edited successfully"
+						
+					// Close the modal
+					$("#editIncomeModal").modal('hide');
+					
+					// Update the itemlog
+					displayItem();
+				}
+			});
+
+		}
+	}); // End of deleteExpense function
+
+
+	// Open the edit debt modal when the item is clicked
+	$(document).on('click', '.list-group-item.list-group-item-info', function(e) {
+		// Get the debt id
+		editdebt_id = $(this).attr('id');
+		debt_username = $(this).children(".item_name").html();   // Debt to: Username
+
+		$("#editdebt_username").html(debt_username);
+
+		// Open the modal
+		$("#editDebtModal").modal();
+
+	});
+	// Edit debt
+	$("#editDebtOn_btn").on('click', function(){
+		// Check login status
+		if ($("#loginstatus").html() == "Guest") {
+			alert("Please log in first!");
+		}
+	 	else {
+			var editdebt_amt = $('#editdebt_amt').val(); 
+			console.log(editdebt_id);
+
+			// Check if the input fields are empty
+			if (editdebt_amt == "") {
+				alert("Please enter the amount");
+			}
+			else {
+				var editdebt_note = $('#editdebt_note').val();  
+
+				// Post data to php
+				$.ajax({
+					method: "POST",
+					url: "editDebt.php",
+					data: {debt_id: editdebt_id, debt_amt: editdebt_amt, debt_note: editdebt_note, token_post: token}
+				})
+				.done(function(data){
+					if (data.success==false) {
+						alert(data.message);
+					}
+					else {
+						// If success...
+						alert(data.message); // "Expense edited successfully"
+						
+						// Close the modal
+						$("#editDebtModal").modal('hide');
+
+						// Update the itemlog
+						displayItem();
+					}
+				});
+
+			}
+		}
+	}); // End of editDebt function
+
+	// Delete debt
+	$("#deleteDebtOn_btn").on('click', function(){
+		// Check login status
+		if ($("#loginstatus").html() == "Guest") {
+			alert("Please log in first!");
+		}
+	 	else {
+
+			// Post data to php
+			$.ajax({
+				method: "POST",
+				url: "deleteDebt.php",
+				data: {debt_id: editdebt_id, token_post: token}
+			})
+			.done(function(data){
+				if (data.success==false) {
+					alert(data.message);
+				}
+				else {
+					// If success...
+					alert(data.message); // "Expense edited successfully"
+						
+					// Close the modal
+					$("#editDebtModal").modal('hide');
+					
+					// Update the itemlog
+					displayItem();
+				}
+			});
+
+		}
+	}); // End of deleteDebt function
+
+
+
+
+	// Open the edit credit modal when the item is clicked
+	$(document).on('click', '.list-group-item.list-group-item-default', function(e) {
+		// Get the credit id
+		editcredit_id = $(this).attr('id');
+		credit_username = $(this).children(".item_name").html();   // Debt to: Username
+
+		$("#editcredit_username").html(credit_username);
+
+		// Open the modal
+		$("#editCreditModal").modal();
+
+	});
+	// Edit credit
+	$("#editCreditOn_btn").on('click', function(){
+		// Check login status
+		if ($("#loginstatus").html() == "Guest") {
+			alert("Please log in first!");
+		}
+	 	else {
+			var editcredit_amt = $('#editcredit_amt').val(); 
+			console.log(editcredit_id);
+
+			// Check if the input fields are empty
+			if (editdebt_amt == "") {
+				alert("Please enter the amount");
+			}
+			else {
+				var editcredit_note = $('#editcredit_note').val();  
+
+				// Post data to php
+				$.ajax({
+					method: "POST",
+					url: "editCredit.php",
+					data: {credit_id: editcredit_id, credit_amt: editcredit_amt, credit_note: editcredit_note, token_post: token}
+				})
+				.done(function(data){
+					if (data.success==false) {
+						alert(data.message);
+					}
+					else {
+						// If success...
+						alert(data.message); // "Expense edited successfully"
+						
+						// Close the modal
+						$("#editCreditModal").modal('hide');
+
+						// Update the itemlog
+						displayItem();
+					}
+				});
+
+			}
+		}
+	}); // End of editCredit function
+
+	// Delete debt
+	$("#deleteCreditOn_btn").on('click', function(){
+		// Check login status
+		if ($("#loginstatus").html() == "Guest") {
+			alert("Please log in first!");
+		}
+	 	else {
+
+			// Post data to php
+			$.ajax({
+				method: "POST",
+				url: "deleteCredit.php",
+				data: {credit_id: editcredit_id, token_post: token}
+			})
+			.done(function(data){
+				if (data.success==false) {
+					alert(data.message);
+				}
+				else {
+					// If success...
+					alert(data.message); // "Expense edited successfully"
+						
+					// Close the modal
+					$("#editCreditModal").modal('hide');
+					
+					// Update the itemlog
+					displayItem();
+				}
+			});
+
+		}
+	}); // End of deleteCredit function
 
 
 
@@ -374,6 +947,7 @@ $(function(){
 	function showdash() {
 		// Display the itemlog
 		$(".dashlog").show();
+		displayItem();
 		// Hide the summarylogs
 		$(".summarylog").hide();
 	}

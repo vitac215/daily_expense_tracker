@@ -87,6 +87,7 @@ try {
 
             echo json_encode(array(
                 "success" => true,
+                "message" => "Registered successfully"
     	    ));
     	$conn->close();
     	exit;
